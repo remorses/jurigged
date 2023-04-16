@@ -19,6 +19,7 @@ def cbreak():
     try:
         old_attrs = termios.tcgetattr(sys.stdin)
     except:
+        yield
         # stdin is not a tty, e.g. when running in a debugger
         return
     tty.setcbreak(sys.stdin)
