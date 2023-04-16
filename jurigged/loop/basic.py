@@ -30,6 +30,7 @@ def cbreak():
 
 
 def read_chars():
+    return
     esc = None
     try:
         while True:
