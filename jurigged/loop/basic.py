@@ -16,16 +16,15 @@ ANSI_ESCAPE_END = re.compile(r"[A-Za-z~]")
 
 @contextmanager
 def cbreak():
-    
+    try:
         old_attrs = termios.tcgetattr(sys.stdin)
-        tty.setcbreak(sys.stdin)
-        try:
-            yield
-        finally:
-            try:
-                termios.tcsetattr(sys.stdin, termios.TCSADRAIN, old_attrs)
-            except Exception as e:
-                print(f"termios error: {e}")
+    except:
+        yield
+    tty.setcbreak(sys.stdin)
+    try:
+        yield
+    finally:
+        termios.tcsetattr(sys.stdin, termios.TCSADRAIN, old_attrs)
         # stdin is not a tty, e.g. when running in a debugger
 
 
